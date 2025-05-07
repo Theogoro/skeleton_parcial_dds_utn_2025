@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/styles.css" type="text/css">
+  <title>Index</title>
+</head>
+<body>
+  Hola desde HTML
+  <div id="app"></div>
+  <script defer>
+    // do a fecth from /api/personas and show the result in the app div
+    const app = document.getElementById('app');
+    fetch('/api/personas')
+      .then(response => response.json())
+      .then(data => {
+        app.innerHTML = JSON.stringify(data);
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        app.innerHTML = 'Error fetching data';
+      });
+  </script>
+</body>
+</html>

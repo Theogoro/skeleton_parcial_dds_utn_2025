@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Persona</title>
+</head>
+<body>
+  <h1>Crear Persona</h1>
+  <form id="personaForm">
+    <label for="firstName">Nombre:</label>
+    <input type="text" id="firstName" name="firstName" required>
+    <br>
+    <label for="lastName">Apellido:</label>
+    <input type="text" id="lastName" name="lastName">
+    <br>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <script>
+    const form = document.getElementById('personaForm');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const formData = new FormData(form);
+      const data = {
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+      };
+
+      try {
+        const response = await fetch('/api/personas', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          alert('Persona creada exitosamente');
+          form.reset();
+        } else {
+          const errorText = await response.text();
+          alert(`Error: ${errorText}`);
+        }
+      } catch (error) {
+        console.error('Error al enviar el formulario:', error);
+        alert('Error al enviar el formulario');
+      }
+    });
+  </script>
+</body>
+</html>
